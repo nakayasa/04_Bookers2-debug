@@ -19,19 +19,11 @@
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
 
-  <% if @book.favorited_by?(current_user) %>
-    <td>
-      <%= link_to book_favorites_path(@book), method: :delete do %>
-        ♥<%= @book.favorites.count %>
-      <% end %>
-    </td>
-    <% else %>
-    <td>
-      <%= link_to book_favorites_path(@book), method: :post do %>
-        ♡<%= @book.favorites.count %>
-      <% end %>
-    </td>
-  <% end %>
+         <!-- ↓追加(部分的に更新したい場所)↓ -->
+        <td id="favorite_btn_<%= @book.id %>">
+          <%= render 'favorites/favorite', book: @book %>
+        </td>
+         <!-- ↑ここまで↑ -->
 
   <% if @book.user == current_user %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
@@ -43,21 +35,12 @@
 </div>
         </tr>
       </table>
-  <% @book.book_comments.each do |book_comment| %>
-    <p><%= image_tag book_comment.user.get_profile_image, size:"50x50" %></p>
-    <%= book_comment.user.name %>
-    <%= book_comment.created_at.strftime('%Y/%m/%d') %><%= book_comment.comment %>
-        <% if book_comment.user == current_user %>
-         <%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete %>
-        <% end %>
-  <% end %>
-<div>
-  <%= form_with model: [@book, @book_comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-    <%= f.submit "送信する" %>
-  <% end %>
-</div>
-    </div>
 
+      <div id="comment">
+        <%= render "books/comment", book: @book, book_comment: @book_comment %>
+      </div>
+        <%= render "books/comment_area", book: @book, book_comment: @book_comment %>
+
+    </div>
   </div>
 </div>
