@@ -58,3 +58,5 @@ gem 'devise'
 gem "net-smtp"
 
 gem 'jquery-rails'
+
+gem 'impressionist', '~>1.6.1'

@@ -5,10 +5,14 @@ before_action :correct_user, only: [:edit, :update]
     @book = Book.new
   end
 
+#  impressionist :actions => [:show]
+
   def show
     @book = Book.find(params[:id])
     @booknew = Book.new
     @book_comment = BookComment.new
+    @user = current_user
+#    impressionist(@book, nil, unique: [:session_hash.to_s])
   end
 
   def index
